@@ -10,12 +10,14 @@ namespace FinalTask
         {
             Console.WriteLine("Введите путь до файла");
             string path = Console.ReadLine();
-            BinaryReader(path);
+            Console.WriteLine("Введите путь до рабочего стола");
+            string PathF = Console.ReadLine() + "\\Students\\";
+            BinaryReader(path, PathF);
             Console.ReadKey();
 
         }
 
-        public static void BinaryReader(string path)
+        public static void BinaryReader(string path, string PathF)
         {
             if (File.Exists(path))
             {
@@ -28,8 +30,8 @@ namespace FinalTask
                         foreach (Student stu in newStudent)
                         {
                             Console.WriteLine($"Name - {stu.Name}, Group - {stu.Group}, Birthday - {stu.DateOfBirth}");
-                            string pathF = "C:\\Users\\Михаил\\Desktop\\Students\\"+stu.Group+".txt";
-                            CreateTheFiles(pathF, stu);
+                            string pathF = PathF+stu.Group+".txt";
+                            CreateTheFiles(pathF, PathF, stu);
                         }
                         Console.WriteLine("Files created");
 
@@ -48,11 +50,11 @@ namespace FinalTask
             }
         }
 
-        public static void CreateTheFiles(string path, Student stu)
+        public static void CreateTheFiles(string path, string PathF, Student stu)
         {
             try
             {
-                DirectoryInfo cr = new DirectoryInfo("C:\\Users\\Михаил\\Desktop\\Students");
+                DirectoryInfo cr = new DirectoryInfo(PathF);
                 if(cr.Exists)
                 {
                     FileInfo file = new FileInfo(path);
@@ -70,7 +72,7 @@ namespace FinalTask
                 else
                 {
                     cr.Create();
-                    CreateTheFiles(path, stu);
+                    CreateTheFiles(path, PathF, stu);
                 }
             }
             catch(Exception message)
